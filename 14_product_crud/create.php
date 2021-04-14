@@ -9,10 +9,10 @@
   // exit;
 
 
-  echo '<pre>';
-  var_dump($_FILES);
-  echo '</pre>';
-  exit;
+  //echo '<pre>';
+  //var_dump($_FILES);
+  //echo '</pre>';
+
 
 
   //echo $_SERVER['REQUEST_METHOD'] . '<br>';
@@ -48,18 +48,48 @@
     //return;
     //}
 
+    if (!is_dir('images')) {
+      mkdir('images');
+    }
+
     if (empty($errors)) {
+
+      $image = $_FILES['image'] ?? null;
+      $imagepath = '';
+      if ($image && $image['tmp_name']) {
+
+        $imagepath = 'images/' . randomstring(8) . '/' . $image['name'];
+        mkdir(dirname($imagepath));
+        //echo '<pre>';
+        //var_dump($imagepath);
+        // echo '</pre>';
+
+        move_uploaded_file($image['tmp_name'], $imagepath);
+      }
+
 
       $statement = $pdo->prepare("INSERT INTO products (title, image, description,price,create_date)
   VALUES (:title, :image, :description, :price, :date)");
 
       $statement->bindValue(':title', $title);
-      $statement->bindValue(':image', '');
+      $statement->bindValue(':image', $imagepath);
       $statement->bindValue(':description', $description);
       $statement->bindValue(':price', $price);
       $statement->bindValue(':date', $date);
       $statement->execute();
+      header('Location:index.php');
     }
+  }
+
+  function randomString($n)
+  {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $str = '';
+    for ($i = 0; $i < $n; $i++) {
+      $index = rand(0, strlen($characters) - 1);
+      $str = $characters[$index];
+    }
+    return $str;
   }
 
   ?>
