@@ -62,10 +62,11 @@
         mkdir(dirname($imagepath));
         //echo '<pre>';
         //var_dump($imagepath);
-        // echo '</pre>';
+        //echo '</pre>';
 
         move_uploaded_file($image['tmp_name'], $imagepath);
       }
+
 
 
       $statement = $pdo->prepare("INSERT INTO products (title, image, description,price,create_date)
@@ -77,7 +78,7 @@
       $statement->bindValue(':price', $price);
       $statement->bindValue(':date', $date);
       $statement->execute();
-      header('Location:index.php');
+      header('Location:index.php'); //redirects to index.php
     }
   }
 
