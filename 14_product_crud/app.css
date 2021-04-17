@@ -5,3 +5,8 @@ body{
 .thumb-image{
   width: 50px;
 }
+
+.update-image
+{
+  width: 0px;
+}
