@@ -113,8 +113,6 @@ function randomString($n)
 
 ?>
 
-
-
 <!doctype html>
 <html lang="en">
 
@@ -130,6 +128,7 @@ function randomString($n)
 </head>
 
 <body>
+
 
 
   <P>
